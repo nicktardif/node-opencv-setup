@@ -1,4 +1,4 @@
-# How to get started with `node-opencv`
+# Getting started with `node-opencv`
 
 * Note: This is only tested on Ubuntu 14.04
 * Run `build_docker.sh <image_name>`, where <image_name> is the name of a new image. Example `build_docker.sh nicktardif/node-opencv`
