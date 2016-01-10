@@ -9,14 +9,18 @@
 
 # update to 14.04
 FROM ubuntu:14.04
-RUN apt-get update -qq
-RUN apt-get install -y software-properties-common python-software-properties
+RUN apt-get update -qq && apt-get install -y \
+  software-properties-common \
+  python-software-properties \
+  curl
 RUN add-apt-repository -y ppa:kubuntu-ppa/backports
-RUN apt-get update
-RUN apt-get install -y libcv-dev libcvaux-dev libhighgui-dev libopencv-dev
-RUN curl -sL https://deb.nodesource.com/setup | bash -
-RUN apt-get install -y nodejs
-RUN npm install opencv || cat npm-debug.log
+RUN curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+RUN apt-get update && apt-get install -y \
+  libcv-dev \
+  libcvaux-dev \
+  libhighgui-dev \
+  libopencv-dev \
+  nodejs
 
 # Replace 1000 with your user / group id
 RUN export uid=1000 gid=1000 && \
@@ -31,6 +35,7 @@ USER developer
 ENV HOME /home/developer
 WORKDIR /home/developer
 
+# Nick stuff
 RUN sudo apt-get install -y \
   vlc \
   feh \
@@ -45,6 +50,8 @@ RUN rm version
 RUN git clone https://github.com/nicktardif/dotfiles.git
 RUN cd dotfiles && ./install.sh
 
-RUN git clone https://github.com/peterbraden/node-opencv.git
+RUN git clone https://github.com/peterbraden/node-opencv.git && \
+    cd node-opencv && \
+    npm install
 
 CMD ["/bin/bash"]
